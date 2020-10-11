@@ -21,6 +21,10 @@
         window.addEventListener('swal',function(e){
             Swal.fire(e.detail);
         });
+
+        window.livewire.on("formModalPositionHide",() => {
+            $("#form-modal-position").modal("hide");
+        })
     </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ class Position extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+    public $searchTerm;
 
     protected $listeners = [
         'positionRender' => 'render'
@@ -17,8 +18,20 @@ class Position extends Component
 
     public function render()
     {
+        $positions = PositionModel::query();
+        
+        if ($this->searchTerm)
+        {
+            $positions = $positions
+                            ->where("posi_name","LIKE","%".$this->searchTerm."%");
+        }
+
+        $positions = $positions
+                        ->latest()
+                        ->paginate(20);
+
         return view('livewire.position',[
-            'positions' => PositionModel::latest()->paginate(20)
+            'positions' => $positions
         ]);
     }
 }
