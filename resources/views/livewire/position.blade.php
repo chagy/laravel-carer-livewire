@@ -1,76 +1,72 @@
 <div>
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
-            
-            @livewire('position-form')
+    <div class="row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <h3>
-                                Position 
-        
-                                
-                            </h3>
+                    <h3 class="card-title">Position </h3>
+
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" wire:model="searchTerm" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button 
+                                type="button" 
+                                class="btn btn-primary my-2 my-sm-0" 
+                                data-toggle="modal" 
+                                wire:click="$emit('positionResetInput')"
+                                data-target="#form-modal-position" >
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
-                        <div class="col-md-5 text-right">
-                            <form class="form-inline my-2 my-lg-0">
-                                <input 
-                                    class="form-control mr-sm-2" 
-                                    type="search" 
-                                    placeholder="Search" 
-                                    aria-label="Search" 
-                                    wire:model="searchTerm">
-                                <button 
-                                    type="button" 
-                                    class="btn btn-primary my-2 my-sm-0" 
-                                    data-toggle="modal" 
-                                    data-target="#form-modal-position" >
-                                    Add
-                                </button>
-                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                <th width="5%">ID</th>
+                                <th>Position</th>
+                                <th width="15%">Status</th>
+                                <th width="5%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($positions as $item)
-                                <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->posi_name }}</td>
-                                    <td>
-                                        @if ($item->posi_status)
-                                        <span class="badge badge-success">Active</span>
-                                        @else 
-                                        <span class="badge badge-danger">Not Active</span>    
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <button 
-                                            type="button" 
-                                            class="btn btn-warning" 
-                                            data-toggle="modal" 
-                                            data-target="#form-modal-position" 
-                                            wire:click.prevent="$emit('positionFormEdit',{{ $item->id }})">
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach ($positions as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->posi_name }}</td>
+                                <td>
+                                    @if ($item->posi_status)
+                                    <span class="badge badge-success">Active</span>
+                                    @else 
+                                    <span class="badge badge-danger">Not Active</span>    
+                                    @endif
+                                </td>
+                                <td>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-warning btn-sm" 
+                                        data-toggle="modal" 
+                                        data-target="#form-modal-position" 
+                                        wire:click.prevent="$emit('positionFormEdit',{{ $item->id }})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
                     {!! $positions->links() !!}
                 </div>
             </div>
+        <!-- /.card -->
         </div>
     </div>
+    @livewire('position-form')
 </div>

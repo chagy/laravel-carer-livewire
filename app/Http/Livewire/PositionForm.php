@@ -13,32 +13,48 @@ class PositionForm extends Component
     public $posi_status;
     public $action;
 
-    // protected $rules = [
-    //     'posi_name' => 'required|unique:positions',
-    //     'posi_status' => 'required'
-    // ];
-
     protected $listeners = [
-        'positionFormEdit' => 'edit'
+        'positionFormEdit' => 'edit',
+        'positionResetInput' => 'resetInput'
     ];
+
+    public function rulesValidate()
+    {
+        if($this->idKey > 0)
+        {
+            return [
+                'posi_name' => 'required|unique:positions,posi_name,'.$this->idKey,
+                'posi_status' => 'required'
+            ];
+        }
+        else 
+        {
+            return  [
+                'posi_name' => 'required|unique:positions',
+                'posi_status' => 'required'
+            ];
+        }
+    }
 
     public function updated($propertyName)
     {
         if($this->idKey == 0)
         {
-            $this->validateOnly($propertyName,[
-                'posi_name' => 'required|unique:positions',
-                'posi_status' => 'required'
-            ]);
+            $this->validateOnly($propertyName,$this->rulesValidate());
         }
         else 
         {
-            $this->validateOnly($propertyName,[
-                'posi_name' => 'required|unique:positions,posi_name,'.$this->idKey,
-                'posi_status' => 'required'
-            ]);
+            $this->validateOnly($propertyName,$this->rulesValidate());
         }
         
+    }
+
+    public function resetInput()
+    {
+        $this->posi_name = "";
+        $this->posi_desc = "";
+        $this->posi_status = "";
+        $this->idKey = 0;
     }
 
 
@@ -47,29 +63,20 @@ class PositionForm extends Component
         
         if ($this->idKey > 0)
         {
-            $validatedData = $this->validate([
-                'posi_name' => 'required|unique:positions,posi_name,'.$this->idKey,
-                'posi_status' => 'required'
-            ]);
+            $validatedData = $this->validate($this->rulesValidate());
             $position = Position::findOrFail($this->idKey);
         }
         else 
         {
-            $validatedData = $this->validate([
-                'posi_name' => 'required|unique:positions',
-                'posi_status' => 'required'
-            ]);
+            $validatedData = $this->validate($this->rulesValidate());
             Position::create([
                 'posi_name' => $this->posi_name,
                 'posi_desc' => $this->posi_desc,
                 'posi_status' => $this->posi_status
             ]);
         }
-        $this->posi_name = "";
-        $this->posi_desc = "";
-        $this->posi_status = "";
-        $this->idKey = 0;
-
+        
+        $this->resetInput();
         $this->emit("positionRender");
 
         $this->dispatchBrowserEvent('swal', [
@@ -84,6 +91,7 @@ class PositionForm extends Component
 
     public function edit($id)
     {
+        $this->resetErrorBag();
         $position = Position::findOrFail($id);
 
         $this->idKey = $position->id;

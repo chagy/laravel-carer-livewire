@@ -27,7 +27,7 @@ class Position extends Component
         }
 
         $positions = $positions
-                        ->latest()
+                        ->orderBy("id","desc")
                         ->paginate(20);
 
         return view('livewire.position',[
