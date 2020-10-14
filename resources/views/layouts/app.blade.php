@@ -56,14 +56,19 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-@livewireScripts
 
+@livewireScripts
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     window.addEventListener('swal',function(e){
         Swal.fire(e.detail);
     });
     window.livewire.on("formModalPositionHide",() => {
         $("#form-modal-position").modal("hide");
+    })
+
+    window.livewire.on("formModalDepartmentHide",() => {
+        $("#form-modal-department").modal("hide");
     })
 </script>
 <!-- jQuery -->

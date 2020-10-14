@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{!! route('position') !!}" class="nav-link">
+                            <a href="{!! route('department') !!}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Department</p>
                             </a>

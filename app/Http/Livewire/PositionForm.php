@@ -65,6 +65,10 @@ class PositionForm extends Component
         {
             $validatedData = $this->validate($this->rulesValidate());
             $position = Position::findOrFail($this->idKey);
+            $position->posi_name = $this->posi_name;
+            $position->posi_desc = $this->posi_desc;
+            $position->posi_status = $this->posi_status;
+            $position->save();
         }
         else 
         {
