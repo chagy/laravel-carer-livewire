@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Position;
 use App\Http\Livewire\Department;
+use App\Http\Livewire\CategoryCarer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,4 @@ Route::get('/', function () {
 
 Route::get('/position',Position::class)->name("position");
 Route::get('/department',Department::class)->name("department");
+Route::get('/category-carer',CategoryCarer::class)->name("category.carer");

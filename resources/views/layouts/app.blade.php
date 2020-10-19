@@ -70,6 +70,10 @@
     window.livewire.on("formModalDepartmentHide",() => {
         $("#form-modal-department").modal("hide");
     })
+
+    window.livewire.on("formModalCategoryCarerHide",() => {
+        $("#form-modal-category-carer").modal("hide");
+    })
 </script>
 <!-- jQuery -->
 <script src="{!! asset('adminLTE/plugins/jquery/jquery.min.js') !!}"></script>
